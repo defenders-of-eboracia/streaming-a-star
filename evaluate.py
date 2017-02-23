@@ -1,3 +1,4 @@
+from FileReader import FileReader
 def score(problem, solution):
     """
     Get the score given the problem definition and the solution.
@@ -17,7 +18,9 @@ def score(problem, solution):
         endpoint = problem.endpoints[endpoint_id]
         baseline_latency = endpoint.latency
 
-        all_caches = endpoint.cacheServers
+        total_requests_no += requests_no
+
+        all_caches = endpoint.cacheServers.copy()
         for available_cache_id, available_cache in all_caches.copy().items():
             if video_id not in solution[available_cache_id]:
                 del all_caches[available_cache_id]
@@ -35,7 +38,6 @@ def score(problem, solution):
         saving *= requests_no
 
         savings += saving
-        total_requests_no += requests_no
 
     savings /= total_requests_no
     savings *= 1000
@@ -45,5 +47,10 @@ def score(problem, solution):
 
 if __name__ == "__main__":
 
-    # TODO test here!
-    pass
+    problem = FileReader('trivialExample.in')
+
+    trivialSolution = [[2],[3,1],[0,1]]
+    testSolution = [[2,3],[1],[0,1]]
+
+    assert score(problem, trivialSolution), 462500
+    assert score(problem, testSolution), 537500
