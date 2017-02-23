@@ -1,6 +1,6 @@
 from FileReader import FileReader
 from mcts.mcts import MCTS
-from mcts.tree_policies import UCB1
+from mcts.tree_policies import UCB1, flat
 from mcts.default_policies import immediate_reward
 from mcts.backups import monte_carlo
 from mcts.graph import StateNode
@@ -39,12 +39,12 @@ while True:
     node = StateNode(parent=None, state=node.state.perform(best_action))
     print("Score now is: %d" % node.state.score)
 
-print("Saving output")
-print(node.state.caches_contents)
+    print("Saving output")
+    print(node.state.caches_contents)
 
-contents = node.state.caches_contents
-contents = _clean_solution(contents)
-dictionary = {i: e for i, e in enumerate(contents) if e}
+    contents = node.state.caches_contents
+    contents = _clean_solution(contents)
+    dictionary = {i: e for i, e in enumerate(contents) if e}
 
-writer = FileWriter('output.txt')
-writer.writeData(dictionary)
+    writer = FileWriter('output.txt')
+    writer.writeData(dictionary)
