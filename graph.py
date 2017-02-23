@@ -59,7 +59,7 @@ class MazeState(object):
             for video_id, video_size in enumerate(self.problem.videoSizes):
 
                 # Don't overfill the cache (capacity)
-                if video_size + video_size > max_capacity:
+                if video_size + cache_current_size > max_capacity:
                     continue
 
                 # Don't duplicate videos in a cache!

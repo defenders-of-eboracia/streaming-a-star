@@ -7,7 +7,8 @@ from mcts.graph import StateNode
 
 
 # Read the input file
-from graph import MazeState, MazeAction
+from FileWriter import FileWriter
+from graph import MazeState, MazeAction, _clean_solution
 
 testfile = "trivialExample.in"
 problem = FileReader(testfile)
@@ -26,6 +27,24 @@ mcts = MCTS(tree_policy=UCB1(c=1.41),
             default_policy=immediate_reward,
             backup=monte_carlo)
 
-root = StateNode(parent=None, state=initial_state)
-best_action = mcts(root)
-print(best_action)
+node = StateNode(parent=None, state=initial_state)
+
+while True:
+    if node.state.is_terminal():
+        print("Terminal node reached.")
+        break
+    print("Finding best action")
+    best_action = mcts(node)
+    print("Performing action")
+    node = StateNode(parent=None, state=node.state.perform(best_action))
+    print("Score now is: %d" % node.state.score)
+
+print("Saving output")
+print(node.state.caches_contents)
+
+contents = node.state.caches_contents
+contents = _clean_solution(contents)
+dictionary = {i: e for i, e in enumerate(contents) if e}
+
+writer = FileWriter('output.txt')
+writer.writeData(dictionary)
