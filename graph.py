@@ -15,7 +15,7 @@ def _clean_solution(solution):
     return list([video_ids for (capacity, video_ids) in solution])
 
 
-class MazeAction(object):
+class TreeAction(object):
     def __init__(self, cache_id, video_id, video_size):
         self.cache_id = cache_id
         self.video_id = video_id
@@ -33,7 +33,7 @@ class MazeAction(object):
         return self.cache_id * 100000 + self.video_id
 
 
-class MazeState(object):
+class TreeState(object):
 
     def __init__(self, score, caches_contents, problem):
         self.caches_contents = caches_contents
@@ -66,7 +66,7 @@ class MazeState(object):
                 if video_id in self.caches_contents[cache_id][1]:
                     continue
 
-                action = MazeAction(cache_id=cache_id, video_id=video_id,
+                action = TreeAction(cache_id=cache_id, video_id=video_id,
                                     video_size=video_size)
                 action.compute_reward(self.problem, previous_state=self, base_score=self.score)
                 options.append(action)
@@ -78,7 +78,7 @@ class MazeState(object):
         contents = _get_caches_contents_by_action(self, action)
         new_score = self.score + action.reward
 
-        node = MazeState(score=new_score, caches_contents=contents,
+        node = TreeState(score=new_score, caches_contents=contents,
                          problem=self.problem)
 
         return node

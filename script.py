@@ -8,7 +8,7 @@ from mcts.graph import StateNode
 
 # Read the input file
 from FileWriter import FileWriter
-from graph import MazeState, MazeAction, _clean_solution
+from graph import TreeState, TreeAction, _clean_solution
 
 testfile = "trivialExample.in"
 problem = FileReader(testfile)
@@ -19,7 +19,7 @@ print("Requests: %r" % ([r for r in problem.requests]))
 # Generate initial state
 initial_contents = list([(0, []) for _ in range(problem.nCaches)])
 initial_score = 0
-initial_state = MazeState(caches_contents=initial_contents, score=initial_score,
+initial_state = TreeState(caches_contents=initial_contents, score=initial_score,
                           problem=problem)
 
 # Generate the optimal end state
