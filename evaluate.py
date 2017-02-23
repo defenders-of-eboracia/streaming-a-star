@@ -42,3 +42,8 @@ def score(problem, solution):
 
     return savings
 
+
+if __name__ == "__main__":
+
+    # TODO test here!
+    pass
