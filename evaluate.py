@@ -38,5 +38,7 @@ def score(problem, solution):
         total_requests_no += requests_no
 
     savings /= total_requests_no
+    savings *= 1000
+
     return savings
 
